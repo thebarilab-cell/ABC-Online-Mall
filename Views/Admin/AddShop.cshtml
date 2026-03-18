@@ -1,0 +1,84 @@
+﻿@model ABCRMALLWebsite.Models.Shop
+@{
+    ViewData["Title"] = "Add New Shop";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Add New Shop</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddShop" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Name" class="form-label">Shop Name *</label>
+                                    <input asp-for="Name" class="form-control" required>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Category" class="form-label">Category *</label>
+                                    <input asp-for="Category" class="form-control" required>
+                                    <span asp-validation-for="Category" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Floor" class="form-label">Floor *</label>
+                                    <select asp-for="Floor" class="form-control" required>
+                                        <option value="">Select Floor</option>
+                                        <option value="Ground Floor">Ground Floor</option>
+                                        <option value="First Floor">First Floor</option>
+                                        <option value="Second Floor">Second Floor</option>
+                                        <option value="Third Floor">Third Floor</option>
+                                    </select>
+                                    <span asp-validation-for="Floor" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="ImagePath" class="form-label">Image URL</label>
+                                    <input asp-for="ImagePath" class="form-control"
+                                           placeholder="https://example.com/image.jpg">
+                                    <span asp-validation-for="ImagePath" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ItemsList" class="form-label">Items List</label>
+                            <textarea asp-for="ItemsList" class="form-control" rows="2"
+                                      placeholder="Enter items separated by commas"></textarea>
+                            <small class="text-muted">e.g., Shoes, T-shirts, Accessories</small>
+                            <span asp-validation-for="ItemsList" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="@Url.Action("ManageShops")" class="btn btn-secondary me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-success">Add Shop</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

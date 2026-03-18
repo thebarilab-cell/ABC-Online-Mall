@@ -1,0 +1,169 @@
+﻿@model ABCRMALLWebsite.Models.TicketBooking
+@{
+    ViewData["Title"] = "Booking Confirmed - ABC Mall";
+}
+
+<!-- Success Hero Section -->
+<section class="hero-section text-white py-5 mt-5" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 text-center text-lg-start" data-aos="fade-right">
+                <h1 class="display-3 fw-bold mb-3">🎉 Booking Confirmed!</h1>
+                <p class="lead mb-4">Your movie experience is all set! Get ready for an unforgettable time.</p>
+            </div>
+            <div class="col-lg-4 text-center" data-aos="fade-left">
+                <div class="success-animation">
+                    <i class="fas fa-check-circle fa-6x text-white mb-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card floating-card border-0 shadow-lg overflow-hidden" data-aos="zoom-in">
+                    <div class="card-header bg-success text-white py-4">
+                        <h3 class="mb-0 text-center">
+                            <i class="fas fa-ticket-alt me-2"></i>Booking Details
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-hashtag me-2 text-primary"></i>Booking ID:</strong>
+                                    <span class="badge bg-primary fs-6">#@Model.Id</span>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-film me-2 text-primary"></i>Movie:</strong>
+                                    <span>@Model.Movie?.Title</span>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-user me-2 text-primary"></i>Customer:</strong>
+                                    <span>@Model.CustomerName</span>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-envelope me-2 text-primary"></i>Email:</strong>
+                                    <span>@Model.Email</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-ticket-alt me-2 text-success"></i>Tickets:</strong>
+                                    <span class="badge bg-success">@Model.NumberOfTickets</span>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-clock me-2 text-success"></i>Show Time:</strong>
+                                    <span>@Model.ShowTime.ToString("MMM dd, yyyy hh:mm tt")</span>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-wallet me-2 text-success"></i>Total Paid:</strong>
+                                    <span class="fw-bold text-success">₹@Model.TotalAmount</span>
+                                </div>
+                                <div class="info-item mb-3">
+                                    <strong><i class="fas fa-calendar me-2 text-success"></i>Booked On:</strong>
+                                    <span>@Model.BookingDate.ToString("MMM dd, yyyy hh:mm tt")</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status Badge -->
+                        <div class="text-center mt-4">
+                            <span class="badge bg-success fs-6 p-3">
+                                <i class="fas fa-check-circle me-2"></i>@Model.BookingStatus
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Instructions -->
+                <div class="card floating-card border-0 shadow mt-4 bg-warning bg-opacity-10" data-aos="fade-up">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">
+                            <i class="fas fa-exclamation-circle me-2"></i>Important Instructions
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Please arrive at least 30 minutes before show time</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Carry a valid ID proof for verification</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Show this booking confirmation at the ticket counter</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Seats are allocated on first-come-first-serve basis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <div class="d-grid gap-2 d-md-flex justify-content-center">
+                        <button onclick="window.print()" class="btn btn-primary me-md-2">
+                            <i class="fas fa-print me-2"></i>Print Ticket
+                        </button>
+                        <a href="@Url.Action("MyBookings", "Booking", new { email = Model.Email })" class="btn btn-success me-md-2">
+                            <i class="fas fa-list me-2"></i>View All Bookings
+                        </a>
+                        <a href="@Url.Action("Movies", "Home")" class="btn btn-outline-primary">
+                            <i class="fas fa-film me-2"></i>Book More Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Celebration effect
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add confetti effect
+            setTimeout(() => {
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            }, 1000);
+
+            // Success animation
+            const successIcon = document.querySelector('.success-animation i');
+            successIcon.style.transform = 'scale(0)';
+            setTimeout(() => {
+                successIcon.style.transition = 'transform 0.5s ease';
+                successIcon.style.transform = 'scale(1)';
+            }, 500);
+        });
+    </script>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        .success-animation i {
+            animation: bounce 1s ease infinite;
+        }
+
+        @@keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .info-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .info-item:last-child {
+                border-bottom: none;
+            }
+    </style>
+}

@@ -1,0 +1,100 @@
+﻿@model ABCRMALLWebsite.Controllers.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Admin Dashboard</h2>
+        <div>
+            <span class="text-muted">Welcome, @Context.Session.GetString("AdminUsername")</span>
+            <a href="@Url.Action("Logout")" class="btn btn-outline-danger btn-sm ms-2">Logout</a>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@Model.TotalShops</h4>
+                            <p>Total Shops</p>
+                        </div>
+                        <div class="align-self-center">
+                            <span style="font-size: 2rem;">🛍️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@Model.TotalMovies</h4>
+                            <p>Total Movies</p>
+                        </div>
+                        <div class="align-self-center">
+                            <span style="font-size: 2rem;">🎬</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@Model.TotalBookings</h4>
+                            <p>Total Bookings</p>
+                        </div>
+                        <div class="align-self-center">
+                            <span style="font-size: 2rem;">🎫</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>@Model.TotalFeedbacks</h4>
+                            <p>Feedbacks</p>
+                        </div>
+                        <div class="align-self-center">
+                            <span style="font-size: 2rem;">📝</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <!-- Quick Actions Section Update Karein -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <h4>Quick Actions</h4>
+            <div class="d-grid gap-2 d-md-flex flex-wrap">
+                <a href="@Url.Action("ManageShops")" class="btn btn-outline-primary me-2 mb-2"> Manage Shops</a>
+                <a href="@Url.Action("ManageMovies")" class="btn btn-outline-success me-2 mb-2">Manage Movies</a>
+                <a href="@Url.Action("ManageFoodCourts")" class="btn btn-outline-info me-2 mb-2">Manage Food Courts</a>
+                <a href="@Url.Action("ManageGallery")" class="btn btn-outline-secondary me-2 mb-2">Manage Gallery</a>
+                <a href="@Url.Action("ViewBookings")" class="btn btn-outline-warning me-2 mb-2">View Bookings</a>
+                <a href="@Url.Action("ViewFeedbacks")" class="btn btn-outline-dark me-2 mb-2">View Feedbacks</a>
+            </div>
+        </div>
+    </div>
+</div>

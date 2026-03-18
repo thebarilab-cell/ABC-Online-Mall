@@ -1,0 +1,87 @@
+﻿@model List<ABCRMALLWebsite.Models.FoodCourt>
+@{
+    ViewData["Title"] = "Manage Food Courts";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Manage Food Courts</h2>
+        <div>
+            <a href="@Url.Action("Dashboard")" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="@Url.Action("AddFoodCourt")" class="btn btn-success">Add New Food Court</a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Counter Name</th>
+                            <th>Cuisine Type</th>
+                            <th>Menu Items</th>
+                            <th>Price Range</th>
+                            <th>Floor</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var foodCourt in Model)
+                        {
+                            <tr>
+                                <td>@foodCourt.Id</td>
+                                <td>
+                                    <strong>@foodCourt.CounterName</strong>
+                                    @if (!string.IsNullOrEmpty(foodCourt.ImagePath))
+                                    {
+                                        <br>
+                                
+                                        <small class="text-muted">Image Available</small>
+                                    }
+                                </td>
+                                <td>@foodCourt.CuisineType</td>
+                                <td>
+                                    <small>@foodCourt.MenuItems</small>
+                                </td>
+                                <td>@foodCourt.PriceRange</td>
+                                <td>@foodCourt.Floor</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="@Url.Action("EditFoodCourt", new { id = foodCourt.Id })"
+                                           class="btn btn-warning">Edit</a>
+                                        <a href="@Url.Action("DeleteFoodCourt", new { id = foodCourt.Id })"
+                                           class="btn btn-danger"
+                                           onclick="return confirm('Are you sure you want to delete this food court?')">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    <h5>No food courts found</h5>
+                                    <p>Add your first food court to get started!</p>
+                                    <a href="@Url.Action("AddFoodCourt")" class="btn btn-primary">Add First Food Court</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

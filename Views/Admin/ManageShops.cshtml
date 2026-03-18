@@ -1,0 +1,85 @@
+﻿@model List<ABCRMALLWebsite.Models.Shop>
+@{
+    ViewData["Title"] = "Manage Shops";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Manage Shops</h2>
+        <div>
+            <a href="@Url.Action("Dashboard")" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="@Url.Action("AddShop")" class="btn btn-success">Add New Shop</a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Shop Name</th>
+                            <th>Category</th>
+                            <th>Floor</th>
+                            <th>Items</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var shop in Model)
+                        {
+                            <tr>
+                                <td>@shop.Id</td>
+                                <td>
+                                    <strong>@shop.Name</strong>
+                                    @if (!string.IsNullOrEmpty(shop.Description))
+                                    {
+                                        <br>
+                                
+                                        <small class="text-muted">@shop.Description</small>
+                                    }
+                                </td>
+                                <td>@shop.Category</td>
+                                <td>@shop.Floor</td>
+                                <td>
+                                    <small>@shop.ItemsList</small>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="@Url.Action("EditShop", new { id = shop.Id })"
+                                           class="btn btn-warning">Edit</a>
+                                        <a href="@Url.Action("DeleteShop", new { id = shop.Id })"
+                                           class="btn btn-danger"
+                                           onclick="return confirm('Are you sure you want to delete this shop?')">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <h5>No shops found</h5>
+                                    <p>Add your first shop to get started!</p>
+                                    <a href="@Url.Action("AddShop")" class="btn btn-primary">Add First Shop</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

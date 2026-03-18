@@ -1,0 +1,317 @@
+﻿@model ABCRMALLWebsite.Models.Contact
+@{
+    ViewData["Title"] = "Contact ABC Mall - Premier Shopping Destination";
+}
+
+<!-- Hero Section -->
+<section class="hero-section text-white py-5 mt-5" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h1 class="display-3 fw-bold mb-4">📞 Get In Touch</h1>
+                <p class="lead mb-4">We'd love to hear from you! Reach out for inquiries, feedback, or just to say hello.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#contact-info" class="btn btn-light btn-lg px-4 py-2">
+                        <i class="fas fa-info-circle me-2"></i>Our Info
+                    </a>
+                    <a href="#feedback-form" class="btn btn-outline-light btn-lg px-4 py-2">
+                        <i class="fas fa-comment me-2"></i>Send Feedback
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-left">
+                <div class="text-center">
+                    <div class="floating-card glass-effect p-4 rounded-3">
+                        <i class="fas fa-headset fa-6x text-white mb-3"></i>
+                        <h4 class="text-white">24/7 Support</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section id="contact-info" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <h2 class="display-4 fw-bold gradient-text">Contact Information</h2>
+                    <p class="lead">Multiple ways to reach us</p>
+                </div>
+
+                <div class="row g-4 stagger-animation">
+                    <div class="col-md-6 stagger-item" data-aos="fade-right">
+                        <div class="card floating-card hover-3d border-0 text-center p-4 h-100">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-map-marker-alt fa-3x text-primary"></i>
+                            </div>
+                            <h5>Visit Us</h5>
+                            <p class="text-muted">
+                                @(Model?.Address ?? "Defence, Karachi, Pakistan 400001")
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stagger-item" data-aos="fade-left">
+                        <div class="card floating-card hover-3d border-0 text-center p-4 h-100">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-phone fa-3x text-success"></i>
+                            </div>
+                            <h5>Call Us</h5>
+                            <p class="text-muted">
+                                @(Model?.Phone ?? "+92-22-12345678")
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stagger-item" data-aos="fade-right">
+                        <div class="card floating-card hover-3d border-0 text-center p-4 h-100">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-envelope fa-3x text-warning"></i>
+                            </div>
+                            <h5>Email Us</h5>
+                            <p class="text-muted">
+                                @(Model?.Email ?? "info@abcmall.com")
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stagger-item" data-aos="fade-left">
+                        <div class="card floating-card hover-3d border-0 text-center p-4 h-100">
+                            <div class="icon-wrapper mb-3">
+                                <i class="fas fa-clock fa-3x text-info"></i>
+                            </div>
+                            <h5>Opening Hours</h5>
+                            <p class="text-muted">
+                                @(Model?.OperatingHours ?? "11:00 AM - 11:00 PM (Mon - Sat)")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feedback Form -->
+<section id="feedback-form" class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card floating-card border-0 shadow-lg">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h3 class="mb-0"><i class="fas fa-comment-dots me-2"></i>Send Us Your Feedback</h3>
+                    </div>
+                    <div class="card-body p-5">
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="zoom-in">
+                                <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <form asp-action="SubmitFeedback" method="post" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-3" data-aos="fade-right">
+                                    <label for="CustomerName" class="form-label">Your Name *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <input type="text" class="form-control" id="CustomerName" name="CustomerName" required>
+                                    </div>
+                                    <div class="invalid-feedback">Please provide your name.</div>
+                                </div>
+                                <div class="col-md-6 mb-3" data-aos="fade-left">
+                                    <label for="Email" class="form-label">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="Email" name="Email">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" data-aos="fade-up">
+                                <label for="Message" class="form-label">Your Message *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                                    <textarea class="form-control" id="Message" name="Message" rows="5" required
+                                              placeholder="Tell us about your experience at ABC Mall..."></textarea>
+                                </div>
+                                <div class="invalid-feedback">Please provide a message.</div>
+                            </div>
+
+                            <div class="mb-4" data-aos="fade-up">
+                                <label for="Rating" class="form-label">Rate Your Experience</label>
+                                <div class="rating-stars text-center">
+                                    <div class="stars mb-2">
+                                        <input type="radio" id="star5" name="Rating" value="5" class="d-none">
+                                        <label for="star5" class="star-label"><i class="fas fa-star fa-2x"></i></label>
+
+                                        <input type="radio" id="star4" name="Rating" value="4" class="d-none">
+                                        <label for="star4" class="star-label"><i class="fas fa-star fa-2x"></i></label>
+
+                                        <input type="radio" id="star3" name="Rating" value="3" class="d-none" checked>
+                                        <label for="star3" class="star-label"><i class="fas fa-star fa-2x"></i></label>
+
+                                        <input type="radio" id="star2" name="Rating" value="2" class="d-none">
+                                        <label for="star2" class="star-label"><i class="fas fa-star fa-2x"></i></label>
+
+                                        <input type="radio" id="star1" name="Rating" value="1" class="d-none">
+                                        <label for="star1" class="star-label"><i class="fas fa-star fa-2x"></i></label>
+                                    </div>
+                                    <small class="text-muted">Click on stars to rate</small>
+                                </div>
+                            </div>
+
+                            <div class="text-center" data-aos="zoom-in">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 py-3">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Feedback
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <h2 class="display-4 fw-bold gradient-text">Find Our Location</h2>
+                    <p class="lead">Easily accessible from all parts of Karachi</p>
+                </div>
+
+                <div class="card floating-card border-0 overflow-hidden" data-aos="zoom-in">
+    <div class="card-body p-0">
+        <div class="map-container bg-light" style="height: 400px; position: relative;">
+            <!-- Google Map Embed -->
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.722498263961!2d67.04645887427866!3d24.812482747528065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb33d85b3c9a2a7%3A0x1d50a5b87de89f5b!2sDefence%20Karachi!5e0!3m2!1sen!2s!4v1731079200000!5m2!1sen!2s"
+                width="100%"
+                height="400"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+
+            <!-- Overlay Info (Optional, if you still want text/buttons on top) -->
+            <div class="map-overlay position-absolute top-50 start-50 translate-middle text-center text-white bg-dark bg-opacity-50 p-3 rounded-3">
+                <h4 class="fw-bold mb-1">ABC Mall Location</h4>
+                <p class="mb-2">@(Model?.Address ?? "Defence, Karachi, Pakistan")</p>
+                <div>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Defence+Karachi"
+                       target="_blank"
+                       class="btn btn-primary btn-sm me-2">
+                        <i class="fas fa-directions me-1"></i>Get Directions
+                    </a>
+                    <button class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-car me-1"></i>Parking Info
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Star rating functionality
+        document.querySelectorAll('.star-label').forEach((label, index, labels) => {
+            label.addEventListener('click', function() {
+                const rating = this.getAttribute('for').replace('star', '');
+
+                // Update star colors
+                labels.forEach((l, i) => {
+                    const star = l.querySelector('i');
+                    if (i < rating) {
+                        star.classList.add('text-warning');
+                        star.classList.remove('text-muted');
+                    } else {
+                        star.classList.remove('text-warning');
+                        star.classList.add('text-muted');
+                    }
+                });
+            });
+        });
+
+        // Form validation
+        (function() {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+
+        // Animate form elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stagger-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'all 0.6s ease';
+            observer.observe(item);
+        });
+    </script>
+
+    <style>
+        .star-label i {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 2px;
+        }
+
+            .star-label i.text-warning {
+                color: #ffc107 !important;
+            }
+
+            .star-label i.text-muted {
+                color: #6c757d !important;
+            }
+
+        .star-label:hover i {
+            transform: scale(1.2);
+        }
+
+        .input-group-text {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+    </style>
+}

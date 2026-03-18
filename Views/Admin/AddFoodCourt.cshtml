@@ -1,0 +1,88 @@
+﻿@model ABCRMALLWebsite.Models.FoodCourt
+@{
+    ViewData["Title"] = "Add Food Court";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Add New Food Court</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddFoodCourt" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CounterName" class="form-label">Counter Name *</label>
+                                    <input asp-for="CounterName" class="form-control" required>
+                                    <span asp-validation-for="CounterName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="CuisineType" class="form-label">Cuisine Type *</label>
+                                    <input asp-for="CuisineType" class="form-control" required
+                                           placeholder="e.g., Fast Food, Chinese, Italian">
+                                    <span asp-validation-for="CuisineType" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="MenuItems" class="form-label">Menu Items *</label>
+                            <textarea asp-for="MenuItems" class="form-control" rows="3" required
+                                      placeholder="List menu items separated by commas"></textarea>
+                            <small class="text-muted">e.g., Burger, Fries, Pizza, Pasta, Soft Drinks</small>
+                            <span asp-validation-for="MenuItems" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="PriceRange" class="form-label">Price Range *</label>
+                                    <input asp-for="PriceRange" class="form-control" required
+                                           placeholder="e.g., 100 - 500">
+                                    <span asp-validation-for="PriceRange" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Floor" class="form-label">Floor *</label>
+                                    <select asp-for="Floor" class="form-control" required>
+                                        <option value="">Select Floor</option>
+                                        <option value="Ground Floor">Ground Floor</option>
+                                        <option value="First Floor">First Floor</option>
+                                        <option value="Second Floor">Second Floor</option>
+                                        <option value="Third Floor">Third Floor</option>
+                                        <option value="Food Court Floor">Food Court Floor</option>
+                                    </select>
+                                    <span asp-validation-for="Floor" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImagePath" class="form-label">Image URL</label>
+                            <input asp-for="ImagePath" class="form-control"
+                                   placeholder="https://example.com/food-image.jpg">
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="@Url.Action("ManageFoodCourts")" class="btn btn-secondary me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-success">Add Food Court</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

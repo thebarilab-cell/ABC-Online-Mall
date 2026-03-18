@@ -1,0 +1,269 @@
+﻿@model ABCRMALLWebsite.Controllers.BookingViewModel
+@{
+    ViewData["Title"] = "Book Tickets - ABC Mall";
+}
+
+<!-- Hero Section -->
+<section class="hero-section text-white py-5 mt-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h1 class="display-4 fw-bold mb-3">🎫 Book Your Tickets</h1>
+                <p class="lead mb-4">Secure your seats for an unforgettable movie experience</p>
+            </div>
+            <div class="col-lg-4 text-center" data-aos="fade-left">
+                <div class="floating-card glass-effect p-4 rounded-3">
+                    <i class="fas fa-ticket-alt fa-5x text-white mb-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Form -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card floating-card border-0 shadow-lg overflow-hidden">
+                    <div class="card-header bg-primary text-white py-4">
+                        <h3 class="mb-0 text-center">
+                            <i class="fas fa-film me-2"></i>@Model.MovieTitle
+                        </h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <!-- Movie Info Sidebar -->
+                            <div class="col-lg-4 bg-light p-4">
+                                <div class="movie-info text-center">
+                                    <div class="mb-4">
+                                        <i class="fas fa-clock fa-2x text-primary mb-2"></i>
+                                        <h5>Show Timings</h5>
+                                        <p class="text-muted">@Model.ShowTimings</p>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <i class="fas fa-tag fa-2x text-success mb-2"></i>
+                                        <h5>Ticket Price</h5>
+                                        <h4 class="text-success">₹@Model.TicketPrice</h4>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <i class="fas fa-chair fa-2x text-warning mb-2"></i>
+                                        <h5>Seats Available</h5>
+                                        <div class="progress mb-2" style="height: 10px;">
+                                            <div class="progress-bar bg-success" role="progressbar"
+                                                 style="width:@((Model.TotalSeats > 0) ? (Model.AvailableSeats * 100 / Model.TotalSeats) : 0)%"
+                                                 aria-valuenow="@Model.AvailableSeats" aria-valuemin="0" aria-valuemax="@Model.TotalSeats"></div>
+                                        </div>
+                                        <p class="text-muted">
+                                            <strong class="text-primary">@Model.AvailableSeats</strong> of
+                                            <strong>@Model.TotalSeats</strong> seats available
+                                        </p>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <small>Book early to secure your preferred seats!</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Booking Form -->
+                            <div class="col-lg-8 p-4">
+                                @if (TempData["ErrorMessage"] != null)
+                                {
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>@TempData["ErrorMessage"]
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    </div>
+                                }
+
+                                <form asp-action="ConfirmBooking" method="post" id="bookingForm">
+                                    <input type="hidden" asp-for="MovieId" />
+                                    <input type="hidden" asp-for="MovieTitle" />
+                                    <input type="hidden" asp-for="TicketPrice" />
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label asp-for="CustomerName" class="form-label">Full Name *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input asp-for="CustomerName" class="form-control" placeholder="Enter your full name">
+                                            </div>
+                                            <span asp-validation-for="CustomerName" class="text-danger small"></span>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label asp-for="Email" class="form-label">Email Address *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input asp-for="Email" class="form-control" placeholder="your@email.com">
+                                            </div>
+                                            <span asp-validation-for="Email" class="text-danger small"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label asp-for="Phone" class="form-label">Phone Number *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                <input asp-for="Phone" class="form-control" placeholder="+92 XXXXX XXXXX">
+                                            </div>
+                                            <span asp-validation-for="Phone" class="text-danger small"></span>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label asp-for="NumberOfTickets" class="form-label">Number of Tickets *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-ticket-alt"></i></span>
+                                                <select asp-for="NumberOfTickets" class="form-control" id="ticketCount">
+                                                    @for (int i = 1; i <= Math.Min(10, Model.AvailableSeats); i++)
+                                                    {
+                                                        <option value="@i">@i Ticket@(i > 1 ? "s" : "")</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <span asp-validation-for="NumberOfTickets" class="text-danger small"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- ✅ Fixed Show Time Selection -->
+                                    <div class="mb-4">
+                                        <label asp-for="ShowTime" class="form-label">Select Show Time *</label>
+                                        <div class="show-time-buttons">
+                                            @{
+                                                var timings = (Model.ShowTimings ?? "")
+                                                .Split(',', StringSplitOptions.RemoveEmptyEntries);
+                                                var baseDate = DateTime.Today;
+                                            }
+
+                                            @if (timings.Length > 0)
+                                            {
+                                                for (int i = 0; i < timings.Length; i++)
+                                                {
+                                                    var time = timings[i].Trim();
+                                                    if (!string.IsNullOrWhiteSpace(time))
+                                                    {
+                                                        var cleanedTime = time.Replace("AM", "", StringComparison.OrdinalIgnoreCase)
+                                                        .Replace("PM", "", StringComparison.OrdinalIgnoreCase)
+                                                        .Trim();
+
+                                                        if (TimeSpan.TryParse(cleanedTime, out var parsedTime))
+                                                        {
+                                                            var showDateTime = baseDate.Add(parsedTime);
+                                                            if (time.Contains("PM", StringComparison.OrdinalIgnoreCase) &&
+                                                            !time.Contains("12"))
+                                                            {
+                                                                showDateTime = showDateTime.AddHours(12);
+                                                            }
+
+                                                            <div class="form-check form-check-inline mb-2">
+                                                                <input class="form-check-input" type="radio" asp-for="ShowTime"
+                                                                       value="@showDateTime.ToString("yyyy-MM-ddTHH:mm")"
+                                                                       id="time@(i)"
+                                                                       checked="@(i == 0)" />
+                                                                <label class="form-check-label btn btn-outline-primary" for="time@(i)">
+                                                                    @time
+                                                                </label>
+                                                            </div>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p class="text-muted">No show timings available.</p>
+                                            }
+                                        </div>
+                                        <span asp-validation-for="ShowTime" class="text-danger small"></span>
+                                    </div>
+
+                                    <!-- Price Summary -->
+                                    <div class="card bg-light border-0 mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Price Summary</h5>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Tickets (<span id="summaryCount">1</span>x):</span>
+                                                <span>₹<span id="summaryPrice">@Model.TicketPrice</span></span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Convenience Fee:</span>
+                                                <span>₹<span id="convenienceFee">20</span></span>
+                                            </div>
+                                            <hr>
+                                            <div class="d-flex justify-content-between fw-bold fs-5">
+                                                <span>Total Amount:</span>
+                                                <span class="text-success">₹<span id="totalAmount">@(Model.TicketPrice + 20)</span></span>
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    <!-- Action Buttons -->
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <a href="@Url.Action("Movies", "Home")" class="btn btn-secondary me-md-2">
+                                            <i class="fas fa-arrow-left me-2"></i>Back to Movies
+                                        </a>
+                                        <button type="submit" class="btn btn-success btn-lg px-5">
+                                            <i class="fas fa-lock me-2"></i>Confirm Booking
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById('ticketCount').addEventListener('change', updatePrice);
+        function updatePrice() {
+            const ticketCount = parseInt(document.getElementById('ticketCount').value);
+            const ticketPrice = @Model.TicketPrice;
+            const convenienceFee = 20;
+            const subtotal = ticketCount * ticketPrice;
+            const total = subtotal + convenienceFee;
+            document.getElementById('summaryCount').textContent = ticketCount;
+            document.getElementById('summaryPrice').textContent = subtotal;
+            document.getElementById('totalAmount').textContent = total;
+        }
+
+        // document.querySelectorAll('input[name="PaymentMethod"]').forEach(radio => {
+        //     radio.addEventListener('change', function() {
+        //         const cardDetails = document.getElementById('cardDetails');
+        //         cardDetails.style.display = this.value === 'Card' ? 'block' : 'none';
+        //     });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstTime = document.querySelector('input[name="ShowTime"]:checked');
+            if (firstTime) {
+                const firstLabel = document.querySelector(`label[for="${firstTime.id}"]`);
+                firstLabel.classList.add('active', 'btn-primary');
+            }
+        });
+    </script>
+
+    <style>
+        .show-time-buttons .form-check-input {
+            display: none;
+        }
+
+        .show-time-buttons .form-check-label.btn {
+            transition: all 0.3s ease;
+        }
+
+        .show-time-buttons .form-check-input:checked + .form-check-label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+}

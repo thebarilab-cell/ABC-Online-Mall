@@ -1,0 +1,92 @@
+﻿@model ABCRMALLWebsite.Models.Movie
+@{
+    ViewData["Title"] = "Add New Movie";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Add New Movie</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddMovie" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Title" class="form-label">Movie Title *</label>
+                                    <input asp-for="Title" class="form-control" required>
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Genre" class="form-label">Genre *</label>
+                                    <input asp-for="Genre" class="form-control" required>
+                                    <span asp-validation-for="Genre" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Duration" class="form-label">Duration *</label>
+                                    <input asp-for="Duration" class="form-control" required 
+                                           placeholder="e.g., 2h 30m">
+                                    <span asp-validation-for="Duration" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="TicketPrice" class="form-label">Ticket Price ($) *</label>
+                                    <input asp-for="TicketPrice" type="number" class="form-control" 
+                                           min="100" max="1000" required>
+                                    <span asp-validation-for="TicketPrice" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ShowTimings" class="form-label">Show Timings *</label>
+                            <input asp-for="ShowTimings" class="form-control" required
+                                   placeholder="e.g., 10:00 AM, 2:00 PM, 6:00 PM, 10:00 PM">
+                            <span asp-validation-for="ShowTimings" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="TotalSeats" class="form-label">Total Seats *</label>
+                                    <input asp-for="TotalSeats" type="number" class="form-control" 
+                                           min="1" max="500" required>
+                                    <span asp-validation-for="TotalSeats" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="ImagePath" class="form-label">Movie Poster URL</label>
+                                    <input asp-for="ImagePath" class="form-control"
+                                           placeholder="https://example.com/poster.jpg">
+                                    <span asp-validation-for="ImagePath" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="@Url.Action("ManageMovies")" class="btn btn-secondary me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-success">Add Movie</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

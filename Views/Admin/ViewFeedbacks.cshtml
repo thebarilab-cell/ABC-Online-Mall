@@ -1,0 +1,55 @@
+﻿@model List<ABCRMALLWebsite.Models.Feedback>
+@{
+    ViewData["Title"] = "Customer Feedbacks";
+}
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Customer Feedbacks</h2>
+        <a href="@Url.Action("Dashboard")" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                foreach (var feedback in Model)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title">@feedback.CustomerName</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">@feedback.Email</h6>
+                                    <p class="card-text">@feedback.Message</p>
+                                    <small class="text-muted">Submitted: @feedback.SubmittedDate.ToString("MMM dd, yyyy hh:mm tt")</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="rating">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <span style="font-size: 1.5rem; color: @(i <= feedback.Rating ? "#ffc107" : "#e4e5e9")">★</span>
+                                        }
+                                    </div>
+                                    <span class="badge bg-primary">Rating: @feedback.Rating/5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center text-muted py-5">
+                    <h5>No feedbacks yet</h5>
+                    <p>Customer feedbacks will appear here</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
